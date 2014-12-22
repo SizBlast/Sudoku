@@ -71,10 +71,12 @@ public class PuzzleView extends View {
 
     private int measureHeight(int measureSpec){
         //TODO
+        throw new UnsupportedOperationException();
     }
 
     private int measureWidth(int measureSpec){
         //TODO
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -85,6 +87,7 @@ public class PuzzleView extends View {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         //TODO: vul de codes in bij passende key down events, om de cursor te verplaatsen
+        throw new UnsupportedOperationException();
     }
 
     public void setSelectedTile(int tile) {
@@ -106,6 +109,7 @@ public class PuzzleView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
           //TODO: te implementeren
+        throw new UnsupportedOperationException();
     }
 
 

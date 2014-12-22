@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-public class Sudoku extends Activity  {
+public class Sudoku extends Activity implements OnClickListener {
 
     private static final String TAG = "Sudoku";
 
@@ -21,8 +21,15 @@ public class Sudoku extends Activity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sudoku);
 
-        //TODO: hier voegen we listeners toe voor alle buttons
-
+        // Hier voegen we listeners toe voor alle buttons
+        View continueButton = findViewById(R.id.continue_button);
+        continueButton.setOnClickListener(this);
+        View newButton = findViewById(R.id.new_game_button);
+        newButton.setOnClickListener(this);
+        View aboutButton = findViewById(R.id.about_button);
+        aboutButton.setOnClickListener(this);
+        View exitButton = findViewById(R.id.exit_button);
+        exitButton.setOnClickListener(this);
     }
 
 
@@ -37,11 +44,18 @@ public class Sudoku extends Activity  {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // TODO: vul de code aan om opties te selecteren
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void onClick(View view) {
-        //TODO : Start hier de relevante activities
+        int id = view.getId();
+        switch (id) {
+            case R.id.about_button:
+                Intent intent = new Intent(this, About.class);
+                startActivity(intent);
+                break;
+        }
     }
 
     private void openNewGameDialog(){
