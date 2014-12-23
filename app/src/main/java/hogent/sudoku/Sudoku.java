@@ -21,7 +21,7 @@ public class Sudoku extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sudoku);
 
-        // Hier voegen we listeners toe voor alle buttons
+        // Listeners toe voor alle buttons
         View continueButton = findViewById(R.id.continue_button);
         continueButton.setOnClickListener(this);
         View newButton = findViewById(R.id.new_game_button);
@@ -35,7 +35,7 @@ public class Sudoku extends Activity implements OnClickListener {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-         super.onCreateOptionsMenu(menu);
+        super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu,menu);
         return true;
@@ -43,8 +43,15 @@ public class Sudoku extends Activity implements OnClickListener {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // TODO: vul de code aan om opties te selecteren
-        throw new UnsupportedOperationException();
+        // Code om opties te selecteren
+        switch (item.getItemId()) {
+            case R.id.settings:
+                Intent intent = new Intent(this,SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
