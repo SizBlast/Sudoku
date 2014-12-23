@@ -62,11 +62,27 @@ public class Sudoku extends Activity implements OnClickListener {
                 Intent intent = new Intent(this, About.class);
                 startActivity(intent);
                 break;
+            case R.id.new_game_button:
+                openNewGameDialog();
+                break;
         }
     }
 
     private void openNewGameDialog(){
-        //TO0DO: hier komt de code om een new game dialoog te maken
+        // TODO: hier komt de code om een new game dialoog te maken
+        // Use the Builder class for convenient dialog construction
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.new_game_title)
+                .setItems(R.array.difficulty, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // The 'which' argument contains the index position
+                        // of the selected item
+                        startGame(which);
+                    }
+                });
+        // Create the AlertDialog object and show it
+        builder.create();
+        builder.show();
     }
 
     private void startGame(int i){
