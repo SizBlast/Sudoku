@@ -3,4 +3,11 @@
     <color name="background">#282828</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+
+    <color name="puzzle_background">#E2E2E2</color>
+    <color name="puzzle_highlight">#FFFFFF</color>
+    <color name="puzzle_light">#FCFCFC</color>
+    <color name="puzzle_dark">#1B1B1B</color>
+    <color name="puzzle_foreground">#000000</color>
+    <color name="puzzle_selected">#CCECC3</color>
 </resources>

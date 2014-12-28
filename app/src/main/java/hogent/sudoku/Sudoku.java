@@ -69,7 +69,7 @@ public class Sudoku extends Activity implements OnClickListener {
     }
 
     private void openNewGameDialog(){
-        // TODO: hier komt de code om een new game dialoog te maken
+        // Code om een new game dialoog te maken
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.new_game_title)
@@ -86,7 +86,9 @@ public class Sudoku extends Activity implements OnClickListener {
     }
 
     private void startGame(int i){
-        Log.d(TAG, "Clicked on "+i);
-        // TODO: vul hier de code aan om een activity te starten
+        Log.d(TAG, "Clicked on " + i);
+        Intent intent = new Intent(Sudoku.this,Game.class);
+        intent.putExtra(Game.KEY_DIFFICULTY,i);
+        startActivity(intent);
     }
 }
