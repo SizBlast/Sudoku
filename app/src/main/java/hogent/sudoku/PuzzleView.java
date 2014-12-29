@@ -10,9 +10,6 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
-/**
- * Created by jbuy519 on 19/08/2014.
- */
 public class PuzzleView extends View {
 
     private static final String TAG = "Sudoku.view";
@@ -91,12 +88,23 @@ public class PuzzleView extends View {
         // Berekenen van de grootte van de view
         int h = measureHeight(heightMeasureSpec);
         int w = measureWidth(widthMeasureSpec);
+
+        if (getResources().getConfiguration().orientation == 1)
+        {
+            h = measureHeight(widthMeasureSpec);
+            w = measureWidth(widthMeasureSpec);
+        }
+        else if (getResources().getConfiguration().orientation == 2)
+        {
+            h = measureHeight(heightMeasureSpec);
+            w = measureWidth(heightMeasureSpec);
+        }
         getRect(cursorX*(w/tileWidth),cursorY*(h/tileHeight),selRect);
         setMeasuredDimension(w,h);
     }
 
     private void getRect(int x, int y, Rect rect){
-        rect.set((int) (x*tileWidth),(int)y*tileHeight,(int)(x*tileWidth+tileWidth),(int)(y*tileHeight+tileHeight));
+        rect.set((int)(x*tileWidth+1),(int)(y*tileHeight+1),(int)(x*tileWidth+tileWidth-2),(int)(y*tileHeight+tileHeight-2));
     }
 
     private int measureHeight(int measureSpec){
@@ -129,7 +137,6 @@ public class PuzzleView extends View {
     protected void onDraw(Canvas canvas) {
         canvas.drawRect(0,0,getWidth(),getHeight(), background);
 
-        // Minor gridlines
         for(int i = 0; i< 9; i++)
         {
             if (i != 3 || i != 6)
@@ -163,33 +170,90 @@ public class PuzzleView extends View {
                 canvas.drawText(this.game.getTileString(i, j),i*tileWidth+x,j*tileHeight+y,foreground);
             }
         }
+
+        Log.d(TAG, "Orientation: " + getResources().getConfiguration().orientation);
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        //TODO: vul de codes in bij passende key down events, om de cursor te verplaatsen
-        throw new UnsupportedOperationException();
+        switch (keyCode){
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+                select(cursorX, cursorY + 1);
+                return true;
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                select(cursorX + 1, cursorY);
+                return true;
+            case KeyEvent.KEYCODE_DPAD_UP:
+                select(cursorX, cursorY - 1);
+                return true;
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+                select(cursorX - 1, cursorY);
+                return true;
+            case KeyEvent.KEYCODE_0:
+                setSelectedTile(0);
+                return true;
+            case KeyEvent.KEYCODE_1:
+                setSelectedTile(1);
+                return true;
+            case KeyEvent.KEYCODE_2:
+                setSelectedTile(2);
+                return true;
+            case KeyEvent.KEYCODE_3:
+                setSelectedTile(3);
+                return true;
+            case KeyEvent.KEYCODE_4:
+                setSelectedTile(4);
+                return true;
+            case KeyEvent.KEYCODE_5:
+                setSelectedTile(5);
+                return true;
+            case KeyEvent.KEYCODE_6:
+                setSelectedTile(6);
+                return true;
+            case KeyEvent.KEYCODE_7:
+                setSelectedTile(7);
+                return true;
+            case KeyEvent.KEYCODE_8:
+                setSelectedTile(8);
+                return true;
+            case KeyEvent.KEYCODE_9:
+                setSelectedTile(9);
+                return true;
+            default:
+                return false;
+        }
     }
 
     public void setSelectedTile(int tile) {
         if (game.setTileIfValid(cursorX, cursorY, tile)){
             invalidate();// may change hints
         } else {
-        // Number is not valid for this tile
+            // Number is not valid for this tile
             Log.d(TAG, "setSelectedTile: invalid: " + tile);
         }
     }
 
     private void select(int x, int y){
         //Is heel belangrijk!
-       //TODO vul de code aan om te nieuwe x en y coordinaten te
-        //bepalen om de nieuw geselecteerde rechthoek te bepalen
+        //TODO vul de code aan om te nieuwe x en y coordinaten te bepalen om de nieuw geselecteerde rechthoek te bepalen
+        invalidate(selRect);
+        cursorY = y;
+        cursorX = x;
+
+        getRect(cursorX,cursorY,selRect);
         // GEBRUIK INVALIDATE
+        invalidate(selRect);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         //TODO: te implementeren
-        throw new UnsupportedOperationException();
+        if (event.getAction() != MotionEvent.ACTION_DOWN)
+            return super.onTouchEvent(event);
+        select((int) (event.getX() / tileWidth),
+                (int) (event.getY() / tileHeight));
+        game.showKeypadOrError(cursorX, cursorY);
+        Log.d(TAG, "onTouchEvent: x " + cursorX + ", y " + cursorY);
+        return true;
     }
 }
