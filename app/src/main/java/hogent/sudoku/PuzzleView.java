@@ -21,7 +21,7 @@ public class PuzzleView extends View {
     private int cursorX;
     private int cursorY;
 
-    //TODO: Definieer hier uw paint objecten
+    // Paint objecten
     private Paint background;
     private Paint foreground;
     private Paint highlight;
@@ -170,8 +170,6 @@ public class PuzzleView extends View {
                 canvas.drawText(this.game.getTileString(i, j),i*tileWidth+x,j*tileHeight+y,foreground);
             }
         }
-
-        Log.d(TAG, "Orientation: " + getResources().getConfiguration().orientation);
     }
 
     @Override
@@ -219,14 +217,19 @@ public class PuzzleView extends View {
             case KeyEvent.KEYCODE_9:
                 setSelectedTile(9);
                 return true;
+            case KeyEvent.KEYCODE_ENTER:
+            case KeyEvent.KEYCODE_DPAD_CENTER:
+                game.showKeypadOrError(cursorX, cursorY);
+                break;
             default:
-                return false;
+                return super.onKeyDown(keyCode,event);
         }
+        return false;
     }
 
     public void setSelectedTile(int tile) {
         if (game.setTileIfValid(cursorX, cursorY, tile)){
-            invalidate();// may change hints
+            invalidate(); // may change hints
         } else {
             // Number is not valid for this tile
             Log.d(TAG, "setSelectedTile: invalid: " + tile);
@@ -234,20 +237,16 @@ public class PuzzleView extends View {
     }
 
     private void select(int x, int y){
-        //Is heel belangrijk!
-        //TODO vul de code aan om te nieuwe x en y coordinaten te bepalen om de nieuw geselecteerde rechthoek te bepalen
         invalidate(selRect);
-        cursorY = y;
-        cursorX = x;
+        cursorY = Math.min(Math.max(y,0), 8);
+        cursorX = Math.min(Math.max(x,0), 8);
 
         getRect(cursorX,cursorY,selRect);
-        // GEBRUIK INVALIDATE
         invalidate(selRect);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        //TODO: te implementeren
         if (event.getAction() != MotionEvent.ACTION_DOWN)
             return super.onTouchEvent(event);
         select((int) (event.getX() / tileWidth),

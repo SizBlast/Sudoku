@@ -6,9 +6,6 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 
-/**
- * Created by jbuy519 on 25/08/2014.
- */
 public class KeyPad extends Dialog {
 
     private final View keys[] = new View[9];
@@ -34,7 +31,6 @@ public class KeyPad extends Dialog {
         }
         setListeners();
     }
-
 
     private void findViews() {
         keypad = findViewById(R.id.keypad);

@@ -32,7 +32,6 @@ public class Sudoku extends Activity implements OnClickListener {
         exitButton.setOnClickListener(this);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
